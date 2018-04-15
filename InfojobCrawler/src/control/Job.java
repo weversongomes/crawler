@@ -2,7 +2,7 @@ package control;
 
 public class Job {
 	String title;
-	String jobID;
+	String id;
 	String city;
 	String state;
 	float salary;

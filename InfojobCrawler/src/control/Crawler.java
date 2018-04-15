@@ -37,6 +37,7 @@ public class Crawler {
 		String line;
 		Job job = new Job();
 		StringBuilder jobTitle = new StringBuilder();
+		boolean buildingID = false;
 		boolean buildingJobTitle = false;
 		boolean buildingCity = false;
 		boolean buildingSalary = false;
@@ -44,6 +45,15 @@ public class Crawler {
 			if ((line.contains("item-block col-md-12"))) {
 				job = new Job();
 				jobTitle = new StringBuilder();
+				buildingID = true;
+			} else if (buildingID) {
+				if (line.contains("href")) {
+					line = line.substring(line.indexOf("\"") + 1);
+					line = line.substring(0, line.indexOf("\""));
+					job.id =line;
+					buildingID = false;
+					System.out.println(job.id);
+				}
 			} else if (line.contains("titulo_vaga")) {
 				buildingJobTitle = true;
 			} else if (buildingJobTitle) {
