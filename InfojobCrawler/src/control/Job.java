@@ -1,7 +1,7 @@
 package control;
 
 public class Job {
-	String jobTitle;
+	String title;
 	String jobID;
 	String city;
 	String state;

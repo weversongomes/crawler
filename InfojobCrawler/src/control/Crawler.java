@@ -35,9 +35,10 @@ public class Crawler {
 		BufferedReader in = new BufferedReader(new InputStreamReader(sourceUrl.openStream()));
 
 		String line;
-		Job job;
+		Job job = new Job();
 		StringBuilder jobTitle = new StringBuilder();
 		boolean buildingJobTitle = false;
+		boolean buildingCity = false;
 		while ((line=in.readLine()) != null) {
 			if ((line.contains("item-block col-md-12"))) {
 				job = new Job();
@@ -47,6 +48,7 @@ public class Crawler {
 			} else if (buildingJobTitle) {
 				if (line.contains("<span>")) {
 					buildingJobTitle = false;
+					buildingCity = true;
 					System.out.println(jobTitle.toString());
 				}
 				if (line.trim().length() > 1) {
@@ -57,7 +59,13 @@ public class Crawler {
 						}
 					}
 					line = line.substring(line.indexOf(line.trim()));
-					jobTitle.append(line);
+					job.title = line;
+				}
+			} else if (buildingCity) {
+				if (line.trim().length() > 1) {
+					line = line.substring(line.indexOf(line.trim()));
+					buildingCity = false;
+					job.city = line;
 				}
 			}
 		}
