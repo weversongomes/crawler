@@ -5,5 +5,5 @@ public class Job {
 	String jobID;
 	String city;
 	String state;
-	int salary;
+	float salary;
 }

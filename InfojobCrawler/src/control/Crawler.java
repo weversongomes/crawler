@@ -39,6 +39,7 @@ public class Crawler {
 		StringBuilder jobTitle = new StringBuilder();
 		boolean buildingJobTitle = false;
 		boolean buildingCity = false;
+		boolean buildingSalary = false;
 		while ((line=in.readLine()) != null) {
 			if ((line.contains("item-block col-md-12"))) {
 				job = new Job();
@@ -49,23 +50,38 @@ public class Crawler {
 				if (line.contains("<span>")) {
 					buildingJobTitle = false;
 					buildingCity = true;
-					System.out.println(jobTitle.toString());
-				}
-				if (line.trim().length() > 1) {
+				} else if (line.trim().length() > 1) {
 					if (line.contains("fa-wheelchair")) {
 						line = line.substring(line.indexOf("</i>") + 4);
 						if (line.charAt(0) == 32) {
 							line = line.substring(1);
 						}
 					}
-					line = line.substring(line.indexOf(line.trim()));
-					job.title = line;
+					if (line.trim().length() > 1) {
+						line = line.substring(line.indexOf(line.trim()));
+						job.title = line;
+						System.out.println(job.title);
+					}
 				}
 			} else if (buildingCity) {
 				if (line.trim().length() > 1) {
 					line = line.substring(line.indexOf(line.trim()));
 					buildingCity = false;
-					job.city = line;
+					buildingSalary = true;
+					job.city = line.split("/")[0];
+					job.state = line.split("/")[1];
+					System.out.println(job.city);
+					System.out.println(job.state);
+				}
+			} else if (buildingSalary) {
+				if (line.contains("R$ ")) {
+						buildingSalary = false;
+						line = line.substring(line.indexOf("R$ ") + 3);
+						line = line.replace(".", "");
+						line = line.replace(",", ".");
+						line = line.substring(0, line.indexOf(".") + 3);
+						job.salary = Float.parseFloat(line);
+						System.out.println(job.salary);
 				}
 			}
 		}
