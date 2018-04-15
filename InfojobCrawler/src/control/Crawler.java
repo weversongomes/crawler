@@ -9,19 +9,31 @@ public class Crawler {
 	public static void main(String[] args) {
 		Crawler crawler = new Crawler();
 		try {
-			crawler.getData();
+			String url = crawler.getAddressFor("feira de santana", "eletricista");
+			crawler.getData(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void getData() throws IOException {
-		String website = "https://www.sine.com.br/vagas-empregos-em-feira-de-santana-ba/";
-		String function = "eletricista";
-		URL sourceUrl = new URL(website + function);
+	public String getAddressFor(String city, String function) {
+		StringBuilder address = new StringBuilder();
+		address.append("https://www.sine.com.br/");
+		if (city.equals("feira de santana")) {
+			address.append("vagas-empregos-em-feira-de-santana-ba");
+		}
+		
+		if (function.equals("eletricista")) {
+			address.append("/eletricista");
+		}
+		return address.toString();
+	}
+	
+	public void getData(String url) throws IOException {
+		URL sourceUrl = new URL(url);
 		System.out.println("Iniciando download...");
 		BufferedReader in = new BufferedReader(new InputStreamReader(sourceUrl.openStream()));
-		//System.out.println("passou");
+
 		String line;
 		Job job;
 		StringBuilder jobTitle = new StringBuilder();
@@ -51,5 +63,4 @@ public class Crawler {
 		}
 		in.close(); 
 	}
-	//System.out.println(line.substring(line.indexOf(">") + 1, line.indexOf("</h1>")));
 }
