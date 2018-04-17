@@ -6,4 +6,8 @@ public class Job {
 	String city;
 	String state;
 	float salary;
+	
+	public boolean isValid() {
+		return true;
+	}
 }
