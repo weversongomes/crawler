@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.LinkedList;
 
 public class Crawler {
 	public static void main(String[] args) {
@@ -92,9 +93,34 @@ public class Crawler {
 						line = line.substring(0, line.indexOf(".") + 3);
 						job.salary = Float.parseFloat(line);
 						System.out.println(job.salary);
+						
+						//teste inserir
+						job.description= "Sem descrição";
+						Bd bd = new Bd();
+						
+						/* descomenta esse trecho de codigo pra inserir no banco
+						try {
+							bd.insert(job);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						*/
+						
 				}
 			}
 		}
+		
 		in.close(); 
+		//exibir tudo que tem na base
+		try {
+			System.out.println("\n******************Empregos na base de dados:**********************");
+			LinkedList<Job> list = new LinkedList<Job>();
+			Bd bd = new Bd();
+			list = bd.buscarTudo();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
