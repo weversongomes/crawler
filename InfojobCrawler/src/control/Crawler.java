@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Hashtable;
 import java.util.LinkedList;
+
 
 public class Crawler {
 	public static void main(String[] args) {
@@ -31,13 +33,13 @@ public class Crawler {
 	}
 	
 	public void getData(String url) throws IOException {
+		Hashtable<String, Job> jobs = new Hashtable<String, Job>();
 		URL sourceUrl = new URL(url);
 		System.out.println("Iniciando download...");
 		BufferedReader in = new BufferedReader(new InputStreamReader(sourceUrl.openStream()));
 
 		String line;
 		Job job = new Job();
-		StringBuilder jobTitle = new StringBuilder();
 		boolean buildingID = false;
 		boolean buildingJobTitle = false;
 		boolean buildingCity = false;
@@ -45,7 +47,6 @@ public class Crawler {
 		while ((line=in.readLine()) != null) {
 			if ((line.contains("item-block col-md-12"))) {
 				job = new Job();
-				jobTitle = new StringBuilder();
 				buildingID = true;
 			} else if (buildingID) {
 				if (line.contains("href")) {
@@ -93,9 +94,15 @@ public class Crawler {
 						line = line.substring(0, line.indexOf(".") + 3);
 						job.salary = Float.parseFloat(line);
 						System.out.println(job.salary);
-						
+						if (!jobs.containsKey(job.id) && job.isValid()) { 
+				              jobs.put(job.id, job); 
+				            } 
+				        } else if(line.contains("fa-map-marker")) { 
+				          if (!jobs.containsKey(job.id) && job.isValid()) { 
+				            jobs.put(job.id, job); 
+				          }
 						//teste inserir
-						job.description= "Sem descrição";
+						job.description= "Sem descricao";
 						Bd bd = new Bd();
 						
 						/* descomenta esse trecho de codigo pra inserir no banco
@@ -111,7 +118,8 @@ public class Crawler {
 			}
 		}
 		
-		in.close(); 
+		in.close();
+		//System.out.println(jobs.toString());
 		//exibir tudo que tem na base
 		try {
 			System.out.println("\n******************Empregos na base de dados:**********************");

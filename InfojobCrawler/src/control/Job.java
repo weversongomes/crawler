@@ -8,4 +8,8 @@ public class Job {
 	String state;
 	float salary;
 	String description;
+	
+	public boolean isValid() { 
+		return true; 
+	} 
 }

@@ -14,7 +14,7 @@ public class Bd {
   
     
     private String url = "jdbc:mysql://" + serverName + "/" + mydatabase+"?useTimezone=true&serverTimezone=UTC";
-    private String username = "root";        //nome de um usuário de seu BD      
+    private String username = "root";        //nome de um usuï¿½rio de seu BD      
     private String password = "";      //sua senha de acesso
    
     private Connection connection = null;
@@ -32,8 +32,8 @@ public class Bd {
     public void insert(Job job) throws Exception {
     	
    	 try {
-   		 	// Carregando o JDBC Driver padrão
-            Class.forName("com.mysql.jdbc.Driver");
+   		 	// Carregando o JDBC Driver padrao
+   		 	Class.forName("com.mysql.cj.jdbc.Driver");
             
             //abre a conexao
             connection = DriverManager.getConnection(url, username, password);
@@ -79,7 +79,7 @@ public class Bd {
      * @throws ClassNotFoundException
      */
     public LinkedList<Job> buscarTudo() throws ClassNotFoundException {
-    	// Carregando o JDBC Driver padrão
+    	// Carregando o JDBC Driver padrao
     	LinkedList<Job> list= new LinkedList<Job>();
         try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -108,7 +108,7 @@ public class Bd {
 	            System.out.println("Cidade: " + job.city );
 	            System.out.println("estadot: " + job.state );
 	            System.out.println("salario: " + job.salary);
-	            System.out.println("descrição: " + job.description);
+	            System.out.println("descriacao: " + job.description);
 	            System.out.println("\n");
 	            
 	            list.add(job);
@@ -139,7 +139,7 @@ public class Bd {
      * @throws ClassNotFoundException
      */
     public LinkedList<Job> buscarQuery(String query) throws ClassNotFoundException {
-    	// Carregando o JDBC Driver padrão
+    	// Carregando o JDBC Driver padrï¿½o
     	LinkedList<Job> list= new LinkedList<Job>();
         try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -168,7 +168,7 @@ public class Bd {
 	            System.out.println("Cidade: " + job.city );
 	            System.out.println("estadot: " + job.state );
 	            System.out.println("salario: " + job.salary);
-	            System.out.println("descrição: " + job.description);
+	            System.out.println("descricao: " + job.description);
 	            System.out.println("\n");
 	            
 	            list.add(job);
@@ -192,14 +192,14 @@ public class Bd {
   		 
   	 }
     /**
-     * Deleta uma profição na base de dados, executa uma query de delete.
-     * @param id Id da profissão no banco de dados
+     * Deleta uma profiï¿½ï¿½o na base de dados, executa uma query de delete.
+     * @param id Id da profissï¿½o no banco de dados
      * @throws Exception
      */
     public void deletById(int id) throws Exception {
     	
       	 try {
-      		 	// Carregando o JDBC Driver padrão
+      		 	// Carregando o JDBC Driver padrï¿½o
                Class.forName("com.mysql.jdbc.Driver");
                
                //abre a conexao
