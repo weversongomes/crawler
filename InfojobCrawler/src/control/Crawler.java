@@ -3,13 +3,14 @@ package control;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.LinkedList;
 
+import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
-
-import com.mysql.cj.xdevapi.JsonParser;
+import javax.json.JsonReader;
 
 
 public class Crawler {
@@ -18,7 +19,7 @@ public class Crawler {
 		try {
 			//String url = crawler.getAddressFor("", "");
 			//crawler.getData(url);
-			String jsonContent = crawler.getContent("https://www.sine.com.br/api/v1.0/Job/List?idFuncao=8741&idCidade=0&pagina=2&pesquisa=&ordenacao=1&idUsuario=NaN");
+			String jsonContent = crawler.getContent("https://www.sine.com.br/api/v1.0/Job/List?idFuncao=0&idCidade=0&pagina=2&pesquisa=&ordenacao=1&idUsuario=NaN");
 			crawler.getAndParseJson(jsonContent);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,14 +55,29 @@ public class Crawler {
 	}
 	
 	public void getAndParseJson(String jsonContent) {
-		/*JsonParser parser = new JsonParser();
-		JsonObject jsonObj;
-		jsonObj = (JsonObject) parser.parse(content);
-		String name = jsonObj.getString("name");
-		int level = jsonObj.getInt("level");*/
+		Job job = new Job();
+		JsonReader jsonReader = Json.createReader(new StringReader(jsonContent));
+		JsonArray array = jsonReader.readArray();
+		JsonObject jsonObject = array.getJsonObject(0);
+		
+		job.id = "" + jsonObject.getInt("id");
+		job.title = jsonObject.getString("df");
+		job.city = jsonObject.getString("dc");
+		job.state = jsonObject.getString("uf");
+		job.salary = jsonObject.get("sl").toString();
+		job.description = jsonObject.getString("d");
+		
+		System.out.println(job.id);
+		System.out.println(job.title);
+		System.out.println(job.city);
+		System.out.println(job.state);
+		System.out.println(job.salary);
+		System.out.println(job.description);
+		
+		jsonReader.close();
 	}
 	
-	public void getData(String url) throws IOException {
+	/*public void getData(String url) throws IOException {
 		Bd bd = new Bd();
 		URL sourceUrl = new URL(url);
 		System.out.println("Iniciando download...");
@@ -121,7 +137,7 @@ public class Crawler {
 						line = line.replace(".", "");
 						line = line.replace(",", ".");
 						line = line.substring(0, line.indexOf(".") + 3);
-						job.salary = Float.parseFloat(line);
+						job.salary = line;
 						System.out.println(job.salary);
 						if (job.isValid()) { 
 							//teste inserir
@@ -170,5 +186,5 @@ public class Crawler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

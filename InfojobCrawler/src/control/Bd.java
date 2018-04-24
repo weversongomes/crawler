@@ -47,7 +47,7 @@ public class Bd {
                preparedStatement.setString(2, job.id);
                preparedStatement.setString(3, job.city);
                preparedStatement.setString(4, job.state);
-               preparedStatement.setFloat(5,job.salary);
+               preparedStatement.setString(5,job.salary);
                preparedStatement.setString(6,job.description);
                preparedStatement.execute();
                
@@ -98,7 +98,7 @@ public class Bd {
 	        	job.id =  resultSet.getString("id_site");
 	        	job.city = resultSet.getString("city");
 	        	job.state = resultSet.getString("state");
-	        	job.salary =  resultSet.getFloat("salary");
+	        	job.salary =  resultSet.getString("salary");
 	        	job.description = resultSet.getString("description");
 	        	
 	            System.out.println("Titulo: " + job.title);
@@ -156,7 +156,7 @@ public class Bd {
 	        	job.id =  resultSet.getString("id_site");
 	        	job.city = resultSet.getString("city");
 	        	job.state = resultSet.getString("state");
-	        	job.salary =  resultSet.getFloat("salary");
+	        	job.salary =  resultSet.getString("salary");
 	        	job.description = resultSet.getString("description");
 	        	
 	            System.out.println("Titulo: " + job.title);
