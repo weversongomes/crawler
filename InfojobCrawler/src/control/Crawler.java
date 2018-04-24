@@ -12,7 +12,7 @@ public class Crawler {
 	public static void main(String[] args) {
 		Crawler crawler = new Crawler();
 		try {
-			String url = crawler.getAddressFor("feira de santana", "eletricista");
+			String url = crawler.getAddressFor("", "");
 			crawler.getData(url);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -20,6 +20,9 @@ public class Crawler {
 	}
 	
 	public String getAddressFor(String city, String function) {
+		//System.setProperty("https.proxyHost", "10.65.16.2"); 
+		//System.setProperty("http.proxyPort", "3128");
+
 		StringBuilder address = new StringBuilder();
 		address.append("https://www.sine.com.br/");
 		if (city.equals("feira de santana")) {
@@ -33,7 +36,7 @@ public class Crawler {
 	}
 	
 	public void getData(String url) throws IOException {
-		Hashtable<String, Job> jobs = new Hashtable<String, Job>();
+		Bd bd = new Bd();
 		URL sourceUrl = new URL(url);
 		System.out.println("Iniciando download...");
 		BufferedReader in = new BufferedReader(new InputStreamReader(sourceUrl.openStream()));
@@ -94,25 +97,37 @@ public class Crawler {
 						line = line.substring(0, line.indexOf(".") + 3);
 						job.salary = Float.parseFloat(line);
 						System.out.println(job.salary);
-						if (!jobs.containsKey(job.id) && job.isValid()) { 
-				              jobs.put(job.id, job); 
+						if (job.isValid()) { 
+							//teste inserir
+							job.description= "Sem descricao";
+							
+							
+							
+							try {
+								bd.insert(job);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
 				            } 
 				        } else if(line.contains("fa-map-marker")) { 
-				          if (!jobs.containsKey(job.id) && job.isValid()) { 
-				            jobs.put(job.id, job); 
+				          if (job.isValid()) { 
+				        	//teste inserir
+								job.description= "Sem descricao";
+								
+								
+								
+								try {
+									bd.insert(job);
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+				         
 				          }
-						//teste inserir
-						job.description= "Sem descricao";
-						Bd bd = new Bd();
 						
-						/* descomenta esse trecho de codigo pra inserir no banco
-						try {
-							bd.insert(job);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						*/
+						
 						
 				}
 			}
@@ -124,7 +139,6 @@ public class Crawler {
 		try {
 			System.out.println("\n******************Empregos na base de dados:**********************");
 			LinkedList<Job> list = new LinkedList<Job>();
-			Bd bd = new Bd();
 			list = bd.buscarTudo();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

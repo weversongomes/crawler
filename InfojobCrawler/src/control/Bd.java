@@ -14,8 +14,8 @@ public class Bd {
   
     
     private String url = "jdbc:mysql://" + serverName + "/" + mydatabase+"?useTimezone=true&serverTimezone=UTC";
-    private String username = "root";        //nome de um usu�rio de seu BD      
-    private String password = "";      //sua senha de acesso
+    private String username = "user";        //nome de um usuaririo de seu BD      
+    private String password = "12345";      //sua senha de acesso
    
     private Connection connection = null;
     //private Statement statement = null;
@@ -82,7 +82,7 @@ public class Bd {
     	// Carregando o JDBC Driver padrao
     	LinkedList<Job> list= new LinkedList<Job>();
         try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			
 			 //abre a conexao
 			connection = DriverManager.getConnection(url, username, password);
@@ -94,7 +94,6 @@ public class Bd {
 	            
 	        	job = new Job();
 	        			
-	        	job.id_bd = resultSet.getInt("id");
 	        	job.title =  resultSet.getString("title");
 	        	job.id =  resultSet.getString("id_site");
 	        	job.city = resultSet.getString("city");
@@ -102,7 +101,6 @@ public class Bd {
 	        	job.salary =  resultSet.getFloat("salary");
 	        	job.description = resultSet.getString("description");
 	        	
-	            System.out.println("ID: " + job.id_bd);
 	            System.out.println("Titulo: " + job.title);
 	            System.out.println("Id site: " +job.id);
 	            System.out.println("Cidade: " + job.city );
@@ -142,7 +140,7 @@ public class Bd {
     	// Carregando o JDBC Driver padr�o
     	LinkedList<Job> list= new LinkedList<Job>();
         try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			
 			 //abre a conexao
 			connection = DriverManager.getConnection(url, username, password);
@@ -153,8 +151,7 @@ public class Bd {
 	        while (resultSet.next()) {
 	            
 	        	job = new Job();
-	        			
-	        	job.id_bd = resultSet.getInt("id");
+
 	        	job.title =  resultSet.getString("title");
 	        	job.id =  resultSet.getString("id_site");
 	        	job.city = resultSet.getString("city");
@@ -162,7 +159,6 @@ public class Bd {
 	        	job.salary =  resultSet.getFloat("salary");
 	        	job.description = resultSet.getString("description");
 	        	
-	            System.out.println("ID: " + job.id_bd);
 	            System.out.println("Titulo: " + job.title);
 	            System.out.println("Id site: " +job.id);
 	            System.out.println("Cidade: " + job.city );
@@ -200,7 +196,7 @@ public class Bd {
     	
       	 try {
       		 	// Carregando o JDBC Driver padr�o
-               Class.forName("com.mysql.jdbc.Driver");
+               Class.forName("com.mysql.cj.jdbc.Driver");
                
                //abre a conexao
                connection = DriverManager.getConnection(url, username, password);
