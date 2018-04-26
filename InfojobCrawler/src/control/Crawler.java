@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 import javax.json.Json;
@@ -19,8 +22,11 @@ public class Crawler {
 		try {
 			//String url = crawler.getAddressFor("", "");
 			//crawler.getData(url);
-			String jsonContent = crawler.getContent("https://www.sine.com.br/api/v1.0/Job/List?idFuncao=0&idCidade=0&pagina=2&pesquisa=&ordenacao=1&idUsuario=NaN");
-			crawler.getAndParseJson(jsonContent);
+			for (int i = 1; i < 51; i++) {  //carregar n paginas
+				String jsonContent = crawler.getContent("https://www.sine.com.br/api/v1.0/Job/List?idFuncao=0&idCidade=0&pagina="+i+"&pesquisa=&ordenacao=1&idUsuario=NaN");
+				crawler.getAndParseJson(jsonContent);
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -55,25 +61,56 @@ public class Crawler {
 	}
 	
 	public void getAndParseJson(String jsonContent) {
+		Bd bd = new Bd();
 		Job job = new Job();
 		JsonReader jsonReader = Json.createReader(new StringReader(jsonContent));
 		JsonArray array = jsonReader.readArray();
-		JsonObject jsonObject = array.getJsonObject(0);
 		
-		job.id = "" + jsonObject.getInt("id");
-		job.title = jsonObject.getString("df");
-		job.city = jsonObject.getString("dc");
-		job.state = jsonObject.getString("uf");
-		job.salary = jsonObject.get("sl").toString();
-		job.description = jsonObject.getString("d");
+		Date data = new Date(System.currentTimeMillis());  
+		SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd"); 		
+		System.out.println("Data: "+data);
 		
-		System.out.println(job.id);
-		System.out.println(job.title);
-		System.out.println(job.city);
-		System.out.println(job.state);
-		System.out.println(job.salary);
-		System.out.println(job.description);
-		
+		int count = 0;
+		while(count<array.size()) {
+			JsonObject jsonObject = array.getJsonObject(count);
+	
+	
+			job.id = "" + jsonObject.getInt("id");
+			job.title = jsonObject.getString("df");
+			job.city = jsonObject.getString("dc");
+			job.state = jsonObject.getString("uf");
+			
+			String s = jsonObject.get("sl").toString();
+			s = s.replace(".", "");
+			System.out.println(s);
+			
+			//formatar a string pra converter para int
+			if (s.contains("R$")) {
+				System.out.println(s.substring(s.indexOf(" ")+1, s.indexOf(",")));
+				
+				job.salary = Integer.parseInt(s.substring(s.indexOf(" ")+1, s.indexOf(",")));
+			}else {
+				job.salary = 0; //string nulla
+			}
+			
+			job.description = jsonObject.getString("d");
+			job.date = data;
+			
+			System.out.println("\nId: "+job.id);
+			System.out.println("Titulo: "+job.title);
+			System.out.println("Cidade: "+job.city);
+			System.out.println("Estado: "+job.state);
+			System.out.println("Salário: "+job.salary);
+			System.out.println("Descrição: "+job.description);
+			
+			try {
+				bd.insert(job);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			count++;
+		}
 		jsonReader.close();
 	}
 	

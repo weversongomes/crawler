@@ -12,8 +12,7 @@ public class Bd {
     private String serverName = "localhost";    //caminho do servidor do BD
     private String mydatabase = "job";        //nome do seu banco de dados
   
-    
-    private String url = "jdbc:mysql://" + serverName + "/" + mydatabase+"?useTimezone=true&serverTimezone=UTC";
+    private String url = "jdbc:mysql://" + serverName + "/" + mydatabase+"?useUnicode=yes&characterEncoding=UTF-8&useTimezone=true&serverTimezone=UTC";
     private String username = "user";        //nome de um usuaririo de seu BD      
     private String password = "12345";      //sua senha de acesso
    
@@ -41,14 +40,14 @@ public class Bd {
            
             if (connection != null) {
             	 
-               System.out.println("Sucesso conectado ao banco!!");
-               preparedStatement = connection.prepareStatement("insert into jobs(title,id_site,city,state,salary,description) values ( ?, ?, ?, ? , ?, ?)");
+               preparedStatement = connection.prepareStatement("insert into jobs(title,id_site,city,state,salary,description,Data) values ( ?, ?, ?, ? , ?, ?, ?)");
                preparedStatement.setString(1, job.title);
                preparedStatement.setString(2, job.id);
                preparedStatement.setString(3, job.city);
                preparedStatement.setString(4, job.state);
-               preparedStatement.setString(5,job.salary);
+               preparedStatement.setInt(5,job.salary);
                preparedStatement.setString(6,job.description);
+               preparedStatement.setDate(7,job.date);
                preparedStatement.execute();
                
                preparedStatement.close();
@@ -98,8 +97,9 @@ public class Bd {
 	        	job.id =  resultSet.getString("id_site");
 	        	job.city = resultSet.getString("city");
 	        	job.state = resultSet.getString("state");
-	        	job.salary =  resultSet.getString("salary");
+	        	job.salary =  resultSet.getInt("salary");
 	        	job.description = resultSet.getString("description");
+	        	job.date = resultSet.getDate("Data");
 	        	
 	            System.out.println("Titulo: " + job.title);
 	            System.out.println("Id site: " +job.id);
@@ -156,8 +156,9 @@ public class Bd {
 	        	job.id =  resultSet.getString("id_site");
 	        	job.city = resultSet.getString("city");
 	        	job.state = resultSet.getString("state");
-	        	job.salary =  resultSet.getString("salary");
+	        	job.salary =  resultSet.getInt("salary");
 	        	job.description = resultSet.getString("description");
+	        	job.date =  resultSet.getDate("Data");
 	        	
 	            System.out.println("Titulo: " + job.title);
 	            System.out.println("Id site: " +job.id);
@@ -165,6 +166,7 @@ public class Bd {
 	            System.out.println("estadot: " + job.state );
 	            System.out.println("salario: " + job.salary);
 	            System.out.println("descricao: " + job.description);
+	            System.out.println("data: " + job.date);
 	            System.out.println("\n");
 	            
 	            list.add(job);
@@ -205,7 +207,7 @@ public class Bd {
                if (connection != null) {
                	 
                   System.out.println("Deletando...!!");
-                  preparedStatement = connection.prepareStatement("DELETE FROM `job`.`jobs` WHERE `jobs`.`id` = ?");
+                  preparedStatement = connection.prepareStatement("DELETE FROM `job`.`jobs` WHERE `jobs`.`id_site` = ?");
                   preparedStatement.setInt(1, id);
            
                   preparedStatement.executeUpdate();
