@@ -31,12 +31,7 @@ public class Bd {
     public void insert(Job job) throws Exception {
     	
    	 try {
-   		 	// Carregando o JDBC Driver padrao
-   		 	Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            //abre a conexao
-            connection = DriverManager.getConnection(url, username, password);
-            //statement = connection.createStatement();
+   		 	abrirConexao();
            
             if (connection != null) {
             	 
@@ -51,15 +46,12 @@ public class Bd {
                preparedStatement.execute();
                
                preparedStatement.close();
+               connection.close();
            
  
             } else {
- 
             	 System.out.println("Errou ao conectar ao banco!");
-            	 
- 
-            }
-            
+            }   
             connection.close();
 
         } catch (SQLException ex) {
@@ -67,30 +59,27 @@ public class Bd {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
+            connection.close();
         } finally {
         	
           
         }
     }
+    
     /**
      * Retorna todos os dados do banco em uma lista 
      * @return Lista com os dados do banco
      * @throws ClassNotFoundException
      */
     public LinkedList<Job> buscarTudo() throws ClassNotFoundException {
-    	// Carregando o JDBC Driver padrao
     	LinkedList<Job> list= new LinkedList<Job>();
         try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			 //abre a conexao
-			connection = DriverManager.getConnection(url, username, password);
+        	abrirConexao();
 	    	preparedStatement = connection.prepareStatement("SELECT * FROM `jobs`");
 	        resultSet = preparedStatement.executeQuery();
 	        
 	        Job job = new Job();
 	        while (resultSet.next()) {
-	            
 	        	job = new Job();
 	        			
 	        	job.title =  resultSet.getString("title");
@@ -109,9 +98,7 @@ public class Bd {
 	            System.out.println("descriacao: " + job.description);
 	            System.out.println("\n");
 	            
-	            list.add(job);
-	            
-	           
+	            list.add(job);  
 	        }
 	        preparedStatement.close();
 	        connection.close();
@@ -137,19 +124,14 @@ public class Bd {
      * @throws ClassNotFoundException
      */
     public LinkedList<Job> buscarQuery(String query) throws ClassNotFoundException {
-    	// Carregando o JDBC Driver padr�o
     	LinkedList<Job> list= new LinkedList<Job>();
         try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			 //abre a conexao
-			connection = DriverManager.getConnection(url, username, password);
+        	abrirConexao();
 	    	preparedStatement = connection.prepareStatement(query);
 	        resultSet = preparedStatement.executeQuery();
 	        
 	        Job job = new Job();
 	        while (resultSet.next()) {
-	            
 	        	job = new Job();
 
 	        	job.title =  resultSet.getString("title");
@@ -170,8 +152,6 @@ public class Bd {
 	            System.out.println("\n");
 	            
 	            list.add(job);
-	            
-	           
 	        }
 	        preparedStatement.close();
 	        connection.close();
@@ -189,23 +169,18 @@ public class Bd {
         } 
   		 
   	 }
+    
     /**
-     * Deleta uma profi��o na base de dados, executa uma query de delete.
-     * @param id Id da profiss�o no banco de dados
+     * Deleta uma vaga base de dados, executa uma query de delete.
+     * @param id Id da vaga no banco de dados
      * @throws Exception
      */
     public void deletById(int id) throws Exception {
     	
       	 try {
-      		 	// Carregando o JDBC Driver padr�o
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               
-               //abre a conexao
-               connection = DriverManager.getConnection(url, username, password);
-               //statement = connection.createStatement();
+      		 abrirConexao();
               
-               if (connection != null) {
-               	 
+               if (connection != null) { 
                   System.out.println("Deletando...!!");
                   preparedStatement = connection.prepareStatement("DELETE FROM `job`.`jobs` WHERE `jobs`.`id_site` = ?");
                   preparedStatement.setInt(1, id);
@@ -213,12 +188,8 @@ public class Bd {
                   preparedStatement.executeUpdate();
                   preparedStatement.close();
 
-    
                } else {
-    
-               	 System.out.println("Errou ao conectar ao banco!");
-               	 
-    
+               	 	System.out.println("Erro ao conectar ao banco!");
                }
                
                connection.close();
@@ -233,6 +204,69 @@ public class Bd {
              
            }
        } 
+    
+    /**
+     * Procura a vaga pelo id e retorna true se a vaga ja existe, false se n existe
+     * @param id Id da vaga
+     * @return True se a vaga existe, false se ainda nao tiver no banco
+     * @throws ClassNotFoundException 
+     */
+    public boolean verificarVaga(String id) throws ClassNotFoundException {
+    	 try {
+    		abrirConexao();           
+            if (connection != null) {
+               preparedStatement = connection.prepareStatement("SELECT * FROM `jobs` WHERE `id_site` = ? ORDER BY `Data` DESC");
+               preparedStatement.setString(1,id);
+   
+               resultSet = preparedStatement.executeQuery();
+	        
+		        if (resultSet.next()) {
+		        	
+		            connection.close();
+					return true;
+				}else {
+					preparedStatement.close();
+		            connection.close();
+					return false;	
+				}
+	       
+            } else {
+            	 System.out.println("Errou ao conectar ao banco!");
+            }
+            
+            connection.close();
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            
+        } finally {
+        	
+          
+        }
+    	return false;
+    }
+    
+    /**
+     * Abre conexao com o banco
+     */
+    private void abrirConexao() {
+        try {
+        	// Carregando o JDBC Driver padrao
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection(url, username, password);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+    	
+    }
 
  
 }

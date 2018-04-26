@@ -19,16 +19,20 @@ import javax.json.JsonReader;
 public class Crawler {
 	public static void main(String[] args) {
 		Crawler crawler = new Crawler();
+		//System.setProperty("https.proxyHost", "10.65.16.2"); 
+		//System.setProperty("https.proxyPort", "3128");
 		try {
 			//String url = crawler.getAddressFor("", "");
 			//crawler.getData(url);
 			for (int i = 1; i < 51; i++) {  //carregar n paginas
+				System.out.println("\n************************  Pagina: "+i+"  *************************\n");
 				String jsonContent = crawler.getContent("https://www.sine.com.br/api/v1.0/Job/List?idFuncao=0&idCidade=0&pagina="+i+"&pesquisa=&ordenacao=1&idUsuario=NaN");
 				crawler.getAndParseJson(jsonContent);
 			}
-			
+			System.out.println("\nFim");
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("Erro ao baixar a pagina");
 		}
 	}
 	/*
@@ -82,12 +86,10 @@ public class Crawler {
 			
 			String s = jsonObject.get("sl").toString();
 			s = s.replace(".", "");
-			System.out.println(s);
-			
+
 			//formatar a string pra converter para int
 			if (s.contains("R$")) {
-				System.out.println(s.substring(s.indexOf(" ")+1, s.indexOf(",")));
-				
+
 				job.salary = Integer.parseInt(s.substring(s.indexOf(" ")+1, s.indexOf(",")));
 			}else {
 				job.salary = 0; //string nulla
@@ -103,8 +105,17 @@ public class Crawler {
 			System.out.println("Salário: "+job.salary);
 			System.out.println("Descrição: "+job.description);
 			
+			
 			try {
 				bd.insert(job);
+				/*
+				if(bd.verificarVaga(job.id)) {
+					System.out.println("Já tem a vaga");
+				}else {
+					
+					bd.insert(job);
+				}
+				*/
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
