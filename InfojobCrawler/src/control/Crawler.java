@@ -24,7 +24,7 @@ public class Crawler {
 		try {
 			//String url = crawler.getAddressFor("", "");
 			//crawler.getData(url);
-			for (int i = 1; i < 51; i++) {  //carregar n paginas
+			for (int i = 1; i < 3; i++) {  //carregar n paginas
 				System.out.println("\n************************  Pagina: "+i+"  *************************\n");
 				String jsonContent = crawler.getContent("https://www.sine.com.br/api/v1.0/Job/List?idFuncao=0&idCidade=0&pagina="+i+"&pesquisa=&ordenacao=1&idUsuario=NaN");
 				crawler.getAndParseJson(jsonContent);
