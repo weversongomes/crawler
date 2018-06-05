@@ -1,4 +1,4 @@
-package control;
+package br.uefs.jobcrawler.JobCrawler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,8 @@ import java.io.StringReader;
 import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.LinkedList;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -84,8 +86,8 @@ public class Crawler {
 			System.out.println("Titulo: "+job.title);
 			System.out.println("Cidade: "+job.city);
 			System.out.println("Estado: "+job.state);
-			System.out.println("Sal·rio: "+job.salary);
-			System.out.println("DescriÁ„o: "+job.description);
+			System.out.println("Sal√°rio: "+job.salary);
+			System.out.println("Descri√ß√£o: "+job.description);
 			
 			
 			try {
