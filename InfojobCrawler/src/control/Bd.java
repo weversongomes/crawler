@@ -13,8 +13,8 @@ public class Bd {
     private String mydatabase = "job";        //nome do seu banco de dados
   
     private String url = "jdbc:mysql://" + serverName + "/" + mydatabase+"?useUnicode=yes&characterEncoding=UTF-8&useTimezone=true&serverTimezone=UTC";
-    private String username = "root";        //nome de um usuaririo de seu BD      
-    private String password = "mandriva";      //sua senha de acesso
+    private String username = "user";        //nome de um usuaririo de seu BD      
+    private String password = "12345";      //sua senha de acesso
    
     private Connection connection = null;
     //private Statement statement = null;
@@ -35,7 +35,7 @@ public class Bd {
            
             if (connection != null) {
             	 
-               preparedStatement = connection.prepareStatement("insert into jobs(title,id_site,city,state,salary,description,date) values ( ?, ?, ?, ?, ?, ?, ?)");
+               preparedStatement = connection.prepareStatement("insert into jobs(title,id_site,city,state,salary,description,Data) values ( ?, ?, ?, ? , ?, ?, ?)");
                preparedStatement.setString(1, job.title);
                preparedStatement.setString(2, job.id);
                preparedStatement.setString(3, job.city);
