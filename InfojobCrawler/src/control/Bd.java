@@ -35,7 +35,7 @@ public class Bd {
            
             if (connection != null) {
             	 
-               preparedStatement = connection.prepareStatement("insert into jobs(title,id_site,city,state,salary,description,Data) values ( ?, ?, ?, ? , ?, ?, ?)");
+               preparedStatement = connection.prepareStatement("insert into jobs(title,id_site,city,state,salary,description,date) values ( ?, ?, ?, ? , ?, ?, ?)");
                preparedStatement.setString(1, job.title);
                preparedStatement.setString(2, job.id);
                preparedStatement.setString(3, job.city);
