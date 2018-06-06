@@ -1,9 +1,0 @@
-
-#Ignore these folders
-/bin/
-/bin/control/
-
-#Ignore these files
-*.class
-*.prefs
-*.jar

@@ -1,5 +1,3 @@
-package control;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,14 +5,11 @@ import java.io.StringReader;
 import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.LinkedList;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-
 
 public class Crawler {
 	public static void main(String[] args) {
@@ -24,7 +19,7 @@ public class Crawler {
 		try {
 			//String url = crawler.getAddressFor("", "");
 			//crawler.getData(url);
-			for (int i = 1; i < 3; i++) {  //carregar n paginas
+			for (int i = 3; i < 4; i++) {  //carregar n paginas
 				System.out.println("\n************************  Pagina: "+i+"  *************************\n");
 				String jsonContent = crawler.getContent("https://www.sine.com.br/api/v1.0/Job/List?idFuncao=0&idCidade=0&pagina="+i+"&pesquisa=&ordenacao=1&idUsuario=NaN");
 				crawler.getAndParseJson(jsonContent);
