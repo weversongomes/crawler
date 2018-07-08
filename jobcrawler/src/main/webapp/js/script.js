@@ -56,12 +56,20 @@ function carregar(prof, reg) {
           console.log(jsonObj.length); 
           var d = "";
           for (var i = 1; i < jsonObj.length; i++) {
-        	  d= d+"cidade: "+jsonObj[i].city+"</br>";
-              d= d+"estado: "+jsonObj[i].est+"</br>";
-              d= d+"profisao: "+jsonObj[i].prof+" </br>";
-              d= d+"salario: "+jsonObj[i].sl+" R$</br>";
-              d= d+"descricao: "+jsonObj[i].desc+"</br></br>";
-            
+        	  d= d+"<div class='col-lg-3 col-md-4 col-sm-6 vagas'>";
+        	  d =d+"<div class='row conteudo'>";
+        	  d= d+"<div class='row container-fluid info'><h5>"+jsonObj[i].prof+"</h5></div>";
+        	  d= d+"<div class='row info'><span>Cidade:</span> "+jsonObj[i].city+"</div>";
+              d= d+"<div class='row info'><span>Estado:</span> "+jsonObj[i].est +"</div>";
+              d= d+"<div class='row info'><span>Salário:</span> ";
+              if(jsonObj[i].sl==0){
+            	  d= d+"Não informado"+"</div>";
+              }else{
+            	  d= d+jsonObj[i].sl +" R$</div>";
+              }
+              d= d+"<div class='row info'><span>Descrição: </span></br><p class='text-justify'>"+jsonObj[i].desc+"</p></div>";
+              d= d+"</div>";
+              d= d+"</div>";
           }
          
           

@@ -34,3 +34,25 @@
 	color: white;
 	margin: auto;
 }
+.vagas{
+	margin:0px;
+	float: left;
+	padding: 5px;
+}
+.conteudo{
+	font-size:12px;
+	height: 100%;
+	margin: 0px;
+	border: 2px solid #010192;
+	border-radius: 10px;
+	background-color: #ffffff;
+}
+.info{
+	
+	margin: 5px;
+	padding-right: 10px;
+}
+.info > span{
+	font-weight: bold;
+}
+

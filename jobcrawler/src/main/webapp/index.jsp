@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/estilo.css">
-	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/script.js" charset="utf-8"></script>
 	<title>Busca salarial!</title>
 </head>
 
@@ -75,8 +75,9 @@
     			<button onclick="carregar('ALL','BR')" class="btn btn-primary bt">Ver vagas de Empregos</button>
     		</div>
     		<div class="resultado container">
-    			<div id="dados">
+    			<div class="row justify-content-center" id="dados">
     				<h2>Resultado aqui</h2>
+    				</br>
     				<p>Usar ajax para receber dados da api e jogar aqui</p>
     			</div>
     			
