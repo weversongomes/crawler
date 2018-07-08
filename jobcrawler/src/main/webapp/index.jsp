@@ -18,70 +18,19 @@
     	
     	<div class="row"">
     		
-
-    		<div id="dados-prof">
-    		</div>
+			<h1>Colocar algo mais visual aqui, ideias de cores para mudar esse visual...</h1>
+			<h1>Ver esses 2 links, precisamos de modo de exibir as estatícas</h1>
+			
+    		
     	</div>
     	<div class=row>
-    		<div class="pesquisa container-fluid">
-    			<h1>Busca salarial</h1>
-				<h3 class="font-weight-normal">Pesquise a média salarial em uma região</h3>
-	    		<div>
-				  <div class="form-row">
-				    <div class="form-group col-md-6">
-				      <label for="profissao">Profissão:</label>
-				      <input type="text" class="form-control" id="profissao" name="cargo" placeholder="Digite um cargo (Ex: Engenheiro de Computação)" required autofocus>
-				    </div>
-				    <div class="form-group col-md-4">
-				      <label for="Estado">Região:</label>
-				      <select id="Estado" class="form-control" name="estado">
-				        <option selected>BR</option>
-				        <option>AC</option>
-				        <option>AL</option>
-				        <option>AP</option>
-				        <option>AM</option>
-				        <option>BA</option>
-				        <option>CE</option>
-				        <option>DF</option>
-				        <option>ES</option>
-				        <option>GO</option>
-				        <option>MA</option>
-				        <option>MT</option>
-				        <option>MS</option>
-				        <option>MG</option>
-				        <option>PA</option>
-				        <option>PB</option>
-				        <option>PR</option>
-				        <option>PE</option>
-				        <option>PI</option>
-				        <option>RJ</option>
-				        <option>RN</option>
-				        <option>RS</option>
-				        <option>RO</option>
-				        <option>RR</option>
-				        <option>SC</option>
-				        <option>SP</option>
-				        <option>SE</option>
-				        <option>TO</option> 
-				      </select>
-				    </div>
-				    <div class="form-group col align-self-end">
-				    	<button onclick="load()" class="btn btn-primary bt">Consultar</button>
-				    </div>
-				  </div>
-				</div>
+    		
+    		<div class="row justify-content-center">
+    			<h3>Montar um visual para exibir esses links para as essa 2 outras pag</h3>
+    			<a class="btn btn-primary" href="vagas.jsp" role="button">Ver vagas de Empregos</a>
+    			<a class="btn btn-primary" href="estatisticas.jsp" role="button">Ver estatísticas</a>
     		</div>
-    		<div>
-    			<button onclick="carregar('ALL','BR')" class="btn btn-primary bt">Ver vagas de Empregos</button>
-    		</div>
-    		<div class="resultado container">
-    			<div class="row justify-content-center" id="dados">
-    				<h2>Resultado aqui</h2>
-    				</br>
-    				<p>Usar ajax para receber dados da api e jogar aqui</p>
-    			</div>
-    			
-    		</div>
+    		
     	</div>
     
 	   

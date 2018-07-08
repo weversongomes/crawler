@@ -6,6 +6,9 @@ function load() {
        var est  = document.getElementById("Estado").value;
        //console.log(p);
        //console.log(est);
+       if(est=="Brasil"){
+       	est="BR";
+       }
        
        var url = "Api?md=estatistica&cargo="+p+"&estado="+est;
        var ajax;
@@ -37,10 +40,16 @@ function load() {
        
   } 
 function carregar(prof, reg) {
-    var p = prof;
-    var est  = reg;
-    console.log(p);
-    console.log(est);
+	var p = document.getElementById("profissao").value;
+    var est  = document.getElementById("Estado").value;
+    //console.log(p);
+    //console.log(est);
+    if(est=="Brasil"){
+    	est="BR";
+    }
+    if(p==""){
+    	p="ALL";
+    }
     
     var url = "Api?md=dado&cargo="+p+"&estado="+est;
     var ajax;
@@ -55,17 +64,17 @@ function carregar(prof, reg) {
           var jsonObj = JSON.parse(ajax.responseText);//JSON.parse()
           console.log(jsonObj.length); 
           var d = "";
-          for (var i = 1; i < jsonObj.length; i++) {
+          for (var i = 0; i < jsonObj.length; i++) {
         	  d= d+"<div class='col-lg-3 col-md-4 col-sm-6 vagas'>";
         	  d =d+"<div class='row conteudo'>";
         	  d= d+"<div class='row container-fluid info'><h5>"+jsonObj[i].prof+"</h5></div>";
-        	  d= d+"<div class='row info'><span>Cidade:</span> "+jsonObj[i].city+"</div>";
-              d= d+"<div class='row info'><span>Estado:</span> "+jsonObj[i].est +"</div>";
-              d= d+"<div class='row info'><span>Salário:</span> ";
+        	  d= d+"<div class='row info'><span>Cidade:&nbsp</span> "+jsonObj[i].city+"</div>";
+              d= d+"<div class='row info'><span>Estado:&nbsp</span> "+jsonObj[i].est +"</div>";
+              d= d+"<div class='row info'><span>Salário:&nbsp</span> ";
               if(jsonObj[i].sl==0){
             	  d= d+"Não informado"+"</div>";
               }else{
-            	  d= d+jsonObj[i].sl +" R$</div>";
+            	  d= d+jsonObj[i].sl +",00 R$</div>";
               }
               d= d+"<div class='row info'><span>Descrição: </span></br><p class='text-justify'>"+jsonObj[i].desc+"</p></div>";
               d= d+"</div>";

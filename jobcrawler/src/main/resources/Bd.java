@@ -134,17 +134,20 @@ public class Bd {
     	
     	//SELECT * FROM `jobs` WHERE `title` LIKE 'Vendedor%' AND `state` LIKE 'BA' LIMIT 10
     	if(!profissao.equalsIgnoreCase("ALL")) {
-    		prof = "`title` LIKE '"+profissao+"%' ";	
+    		prof = "`title` LIKE '%"+profissao+"%'";	
     	}
     	if(!estado.equalsIgnoreCase("BR")) {
-    		est = "AND `state` LIKE '"+estado+"' ";
+    		est = "`state` LIKE '"+estado+"'";
     	}
     	
-    	if(prof.equalsIgnoreCase("") &&est.equalsIgnoreCase("")) {
+    	if(prof.equalsIgnoreCase("") && est.equalsIgnoreCase("")) {
     		query = "SELECT * FROM `jobs` LIMIT "+Integer.toString(limite);
-    	}else {
+    	}else if(est.equalsIgnoreCase("")){
         	query = "SELECT * FROM `jobs` "+
-        			"WHERE "+prof+est+"LIMIT "+Integer.toString(limite);
+        			"WHERE "+prof+" LIMIT "+Integer.toString(limite);
+    	}else {
+    		query = "SELECT * FROM `jobs` "+
+        			"WHERE "+prof+" AND "+est+" LIMIT "+Integer.toString(limite);	
     	}
 
         try {
@@ -220,10 +223,10 @@ public class Bd {
         
     	if(todosEstados ==1) { //consulta para todo o brasil
     		query = "SELECT "+f+"(`salary`) FROM `jobs` "+
-    				"WHERE `title` LIKE '"+profissao+"%' AND `salary` > 0";
+    				"WHERE `title` LIKE '%"+profissao+"%' AND `salary` > 0";
         }else { //consulta para o estado especifico
         	query = "SELECT "+f+"(`salary`) FROM `jobs` "+
-    				"WHERE `title` LIKE '"+profissao+"%' AND `state` LIKE '"+estado+"' AND `salary` > 0";
+    				"WHERE `title` LIKE '%"+profissao+"%' AND `state` LIKE '"+estado+"' AND `salary` > 0";
 	
         }
     	
