@@ -13,10 +13,11 @@
 	
 }
 .main{
-	height:600px;
+	min-height:600px;
 	background-color: #a2c29e;
 	margin: auto;
-	border: 1px solid red;
+	box-shadow: 6px 0px 6px #8ab798;
+	
 }
 .pesquisa{
 	padding: 20px;

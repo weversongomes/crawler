@@ -121,46 +121,55 @@ public class Bd {
      * @return lista de job encontrados com a query
      * @throws ClassNotFoundException
      */
-    public LinkedList<Job> buscarQuery(String query) throws ClassNotFoundException {
-    	LinkedList<Job> list= new LinkedList<Job>();
-        try {
+    public int buscaPorSalario(String profissao, String estado, int todosEstados, String funcao) throws ClassNotFoundException {
+    	int valor = 0;
+    	String f ="";
+    	String query = "";
+    	
+    	if(funcao.equalsIgnoreCase("MIN")) {
+    		f="MIN";
+    	}
+    	if(funcao.equalsIgnoreCase("MAX")) {
+    		f="MAX";
+    	}
+    	if(funcao.equalsIgnoreCase("COUNT")) {
+    		f="COUNT";
+    	}
+    	if(funcao.equalsIgnoreCase("AVG")) {
+    		f="AVG";
+    	}
+    	 //Montar a consulta
+        //SELECT MIN(`salary`) FROM `jobs` WHERE `title` LIKE 'Vendedor' AND `state` LIKE 'BA' AND `salary` > 0 ORDER BY `salary` ASC
+        
+    	if(todosEstados ==1) { //consulta para todo o brasil
+    		query = "SELECT "+f+"(`salary`) FROM `jobs` "+
+    				"WHERE `title` LIKE '"+profissao+"%' AND `salary` > 0";
+        }else { //consulta para o estado especifico
+        	query = "SELECT "+f+"(`salary`) FROM `jobs` "+
+    				"WHERE `title` LIKE '"+profissao+"%' AND `state` LIKE '"+estado+"' AND `salary` > 0";
+	
+        }
+    	
+    	try {
         	abrirConexao();
+        	
 	    	preparedStatement = connection.prepareStatement(query);
 	        resultSet = preparedStatement.executeQuery();
-	        
-	        Job job = new Job();
-	        while (resultSet.next()) {
-	        	job = new Job();
-
-	        	job.title =  resultSet.getString("title");
-	        	job.id =  resultSet.getString("id_site");
-	        	job.city = resultSet.getString("city");
-	        	job.state = resultSet.getString("state");
-	        	job.salary =  resultSet.getInt("salary");
-	        	job.description = resultSet.getString("description");
-	        	job.date =  resultSet.getDate("Data");
-	        	
-	            System.out.println("Titulo: " + job.title);
-	            System.out.println("Id site: " +job.id);
-	            System.out.println("Cidade: " + job.city );
-	            System.out.println("estadot: " + job.state );
-	            System.out.println("salario: " + job.salary);
-	            System.out.println("descricao: " + job.description);
-	            System.out.println("data: " + job.date);
-	            System.out.println("\n");
-	            
-	            list.add(job);
-	        }
+	       
+	        if(resultSet.next()) {
+	        	valor = resultSet.getInt(1) ;				
+			}
 	        preparedStatement.close();
 	        connection.close();
-	        return list;
+	        return valor;
 	        
 		} catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
-            return list;
+            //resultSet = null;
+            return valor;
         } finally {
         	
         	

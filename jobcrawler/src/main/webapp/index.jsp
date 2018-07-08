@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/estilo.css">
+	<script type="text/javascript" src="js/script.js"></script>
 	<title>Busca salarial!</title>
 </head>
 
@@ -18,7 +19,7 @@
     		<div class="pesquisa container-fluid">
     			<h1>Busca salarial</h1>
 				<h3 class="font-weight-normal">Pesquise a média salarial em uma região</h3>
-	    		<form action="/jobcrawler/Api?" method="get">
+	    		<div>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label for="profissao">Profissão:</label>
@@ -58,13 +59,13 @@
 				      </select>
 				    </div>
 				    <div class="form-group col align-self-end">
-				    	<button type="submit" class="btn btn-primary bt">Consultar</button>
+				    	<button onclick="load()" class="btn btn-primary bt">Consultar</button>
 				    </div>
 				  </div>
-				</form>
+				</div>
     		</div>
     		<div class="resultado container">
-    			<div>
+    			<div id="dados">
     				<h2>Resultado aqui</h2>
     				<p>Usar ajax para receber dados da api e jogar aqui</p>
     			</div>
