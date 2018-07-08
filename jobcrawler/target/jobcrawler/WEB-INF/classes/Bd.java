@@ -2,7 +2,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.sql.ResultSet;
 
 public class Bd {
@@ -86,7 +88,7 @@ public class Bd {
 	        	job.state = resultSet.getString("state");
 	        	job.salary =  resultSet.getInt("salary");
 	        	job.description = resultSet.getString("description");
-	        	job.date = resultSet.getDate("Data");
+	        	job.date = resultSet.getDate("date");
 	        	
 	            System.out.println("Titulo: " + job.title);
 	            System.out.println("Id site: " +job.id);
@@ -116,13 +118,35 @@ public class Bd {
   	 }
     
     /**
-     * Procura no banco por uma query
-     * @param query String com a query
-     * @return lista de job encontrados com a query
+     * 
+     * @param profissao cargo procurado. (all) para todas as profissoes
+     * @param estado o estado procurado (BR) vai para o brasil todo
+     * @param limite numero maximo de dados retornados
+     * @return map com um job, a chave o id_site
      * @throws ClassNotFoundException
      */
-    public LinkedList<Job> buscarQuery(String query) throws ClassNotFoundException {
-    	LinkedList<Job> list= new LinkedList<Job>();
+    public Map<String, Job> procurarVagas(String profissao, String estado, int limite) throws ClassNotFoundException {
+    	
+    	Map<String, Job> hash = new HashMap<String, Job>();
+    	String query = "";
+    	String prof ="";
+    	String est = "";
+    	
+    	//SELECT * FROM `jobs` WHERE `title` LIKE 'Vendedor%' AND `state` LIKE 'BA' LIMIT 10
+    	if(!profissao.equalsIgnoreCase("ALL")) {
+    		prof = "`title` LIKE '"+profissao+"%' ";	
+    	}
+    	if(!estado.equalsIgnoreCase("BR")) {
+    		est = "AND `state` LIKE '"+estado+"' ";
+    	}
+    	
+    	if(prof.equalsIgnoreCase("") &&est.equalsIgnoreCase("")) {
+    		query = "SELECT * FROM `jobs` LIMIT "+Integer.toString(limite);
+    	}else {
+        	query = "SELECT * FROM `jobs` "+
+        			"WHERE "+prof+est+"LIMIT "+Integer.toString(limite);
+    	}
+
         try {
         	abrirConexao();
 	    	preparedStatement = connection.prepareStatement(query);
@@ -131,36 +155,98 @@ public class Bd {
 	        Job job = new Job();
 	        while (resultSet.next()) {
 	        	job = new Job();
-
+	        			
 	        	job.title =  resultSet.getString("title");
 	        	job.id =  resultSet.getString("id_site");
 	        	job.city = resultSet.getString("city");
 	        	job.state = resultSet.getString("state");
 	        	job.salary =  resultSet.getInt("salary");
 	        	job.description = resultSet.getString("description");
-	        	job.date =  resultSet.getDate("Data");
+	        	job.date = resultSet.getDate("date");
 	        	
+	        	/*
 	            System.out.println("Titulo: " + job.title);
 	            System.out.println("Id site: " +job.id);
 	            System.out.println("Cidade: " + job.city );
 	            System.out.println("estadot: " + job.state );
 	            System.out.println("salario: " + job.salary);
-	            System.out.println("descricao: " + job.description);
-	            System.out.println("data: " + job.date);
+	            System.out.println("descriacao: " + job.description);
 	            System.out.println("\n");
-	            
-	            list.add(job);
+	            */
+	            hash.put(job.id, job);  
 	        }
 	        preparedStatement.close();
 	        connection.close();
-	        return list;
+	        return hash;
 	        
 		} catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
-            return list;
+            return hash;
+        } finally {
+        	
+        	
+        } 
+  		 
+  	 }
+    
+    /**
+     * Procura no banco por uma query
+     * @param query String com a query
+     * @return lista de job encontrados com a query
+     * @throws ClassNotFoundException
+     */
+    public int buscaPorSalario(String profissao, String estado, int todosEstados, String funcao) throws ClassNotFoundException {
+    	int valor = 0;
+    	String f ="";
+    	String query = "";
+    	
+    	if(funcao.equalsIgnoreCase("MIN")) {
+    		f="MIN";
+    	}
+    	if(funcao.equalsIgnoreCase("MAX")) {
+    		f="MAX";
+    	}
+    	if(funcao.equalsIgnoreCase("COUNT")) {
+    		f="COUNT";
+    	}
+    	if(funcao.equalsIgnoreCase("AVG")) {
+    		f="AVG";
+    	}
+    	 //Montar a consulta
+        //SELECT MIN(`salary`) FROM `jobs` WHERE `title` LIKE 'Vendedor' AND `state` LIKE 'BA' AND `salary` > 0 ORDER BY `salary` ASC
+        
+    	if(todosEstados ==1) { //consulta para todo o brasil
+    		query = "SELECT "+f+"(`salary`) FROM `jobs` "+
+    				"WHERE `title` LIKE '"+profissao+"%' AND `salary` > 0";
+        }else { //consulta para o estado especifico
+        	query = "SELECT "+f+"(`salary`) FROM `jobs` "+
+    				"WHERE `title` LIKE '"+profissao+"%' AND `state` LIKE '"+estado+"' AND `salary` > 0";
+	
+        }
+    	
+    	try {
+        	abrirConexao();
+        	
+	    	preparedStatement = connection.prepareStatement(query);
+	        resultSet = preparedStatement.executeQuery();
+	       
+	        if(resultSet.next()) {
+	        	valor = resultSet.getInt(1) ;				
+			}
+	        preparedStatement.close();
+	        connection.close();
+	        return valor;
+	        
+		} catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            //resultSet = null;
+            return valor;
         } finally {
         	
         	
