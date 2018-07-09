@@ -58,4 +58,20 @@ bory{
 .info > span{
 	font-weight: bold;
 }
+.titulos{
+	margin-left: 5px;;
+	padding: 10px;
+	padding-top: 100px;
+}
+.bb{
 
+	padding: 40px;
+	margin: auto;
+	padding-bottom: 100px;
+}
+.botoes{
+	
+	margin-left: 20px;
+	paddingt: 10px;
+	
+}

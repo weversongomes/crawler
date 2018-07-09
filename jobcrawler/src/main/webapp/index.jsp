@@ -14,21 +14,70 @@
 		<div class="logo">WM Empregos</div>
 		
 	</div>
-    <div class="main container">
+    <div class="main container ">
     	
-    	<div class="row"">
+    	<div class=row>
+    		<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+			  <ol class="carousel-indicators">
+			    <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+			    <li data-target="#carouselIndicators" data-slide-to="1"></li>
+			    <li data-target="#carouselIndicators" data-slide-to="2"></li>
+			  </ol>
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img class="d-block w-100" src="img/emprego1.jpg" alt="First slide">
+			      <div class="carousel-caption d-none d-md-block">
+				    <h3 class="text-body">Busca por Emprego</h3>
+				    
+				  </div>
+			    </div>
+			    <div class="carousel-item">
+			      <img class="d-block w-100" src="img/oportunidade.png" alt="Second slide">
+			      <div class="carousel-caption d-none d-md-block">
+				    <h3 class="text-body">Análise as oportunidades perto de você</h3>
+				    
+				  </div>
+			    </div>
+			    <div class="carousel-item">
+			      <img class="d-block w-100" src="img/emprego4.jpg" alt="Third slide">
+			      <div class="carousel-caption d-none d-md-block">
+				    <h3 class="text-body">Veja estatísticas de sua profissão</h3>
+				    
+				  </div>
+			    </div>
+			  </div>
+			  <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </a>
+			</div>
     		
-			<h1>Colocar algo mais visual aqui, ideias de cores para mudar esse visual...</h1>
-			<h1>Ver esses 2 links, precisamos de modo de exibir as estatícas</h1>
+    		<div class="container-fluid ">
+    			<div class="row justify-content-center">
+    				<h2 class="titulos">O que você procura?</h2>
+    			</div>
+    			<div class="row justify-content-center">
+    				
+    				<div class="bb">
+    					<a class="botoes btn btn-primary float-left" href="vagas.jsp" role="button">Ver vagas de Empregos</a>
+    					<a class="botoes btn btn-primary float-left" href="estatisticas.jsp" role="button">Ver estatísticas</a>
+    				</div >
+    				
+ 
+    				
+    				
+    			</div>
+    			
+    			
+    		</div>
+    		<div class="row">
+
 			
     		
-    	</div>
-    	<div class=row>
-    		
-    		<div class="row justify-content-center">
-    			<h3>Montar um visual para exibir esses links para as essa 2 outras pag</h3>
-    			<a class="btn btn-primary" href="vagas.jsp" role="button">Ver vagas de Empregos</a>
-    			<a class="btn btn-primary" href="estatisticas.jsp" role="button">Ver estatísticas</a>
     		</div>
     		
     	</div>
