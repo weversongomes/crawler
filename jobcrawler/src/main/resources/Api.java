@@ -121,7 +121,7 @@ public class Api extends HttpServlet {
             //JsonObjectBuilder builder = Json.createObjectBuilder();
             
     		try {
-				hash = bd.procurarVagas(profissao, estado, 200);
+				hash = bd.procurarVagas(profissao, estado, 500);
 				
 	            for (String key : hash.keySet()) {
 	            	

@@ -8,7 +8,10 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/estilo.css">
 	<script type="text/javascript" src="js/script.js" charset="utf-8"></script>
-	<title>Vagas</title>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	
+	<title>Estatísticas</title>
 </head>
 
 <body>
@@ -25,10 +28,20 @@
     	</div>
     	<div class=row>
     		<div class="pesquisa container-fluid">
-    			<h2>Estatística</h2>
-				<p class="font-weight-normal">Veja as estatísticas de sua região.</p>
-				<p class="font-weight-normal">Você pode pequisar as estatísticas sobre uma profissão nos estados ou do Brasil inteiro.</p>
-				<p class="font-weight-normal">As estatísticas não levam em conta as vagas de empregos com salário a combinar ou salário não informado pelo empregador.</p>
+    			<div class="container-fluid text">
+    				<div class="row">
+    					<h2 >Estatística</h2>
+    				</div>
+	    			<div class="row">
+		    			<p class="font-weight-normal">Veja as estatísticas de sua região.</br>
+							Você pode pequisar as estatísticas sobre uma profissão nos estados do Brasil.</br>
+							As estatísticas não levam em conta as vagas de empregos com salário a combinar ou salário não informado pelo empregador.
+						</p>
+	    			</div>
+					
+    			</div>
+    			
+				
 	    		<div>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
@@ -76,9 +89,52 @@
     		</div>
     		
     		<div class="resultado container">
-    			<div class="row justify-content-center" id="dados">
+    			
+    			<div class="col-lg-8 col-md-10 col-sm-12 container">
+    				<div class="row justify-content-center grafo" id="div_canvas">
+    					<canvas id="myChart" ></canvas>
+    				</div>
     				
     			</div>
+    			<div class="col-lg-8 col-md-10 col-sm-12 container">
+	    			<div class="row justify-content-center" id="dados">
+	    			
+	    			<table class="table  table-hover table-bordered tabela">
+						  <thead>
+						    <tr>
+						      <th scope="col"></th>
+						      <th scope="col">Estado</th>
+						      <th scope="col">Brasil</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row">Menor Salário</th>
+						      <td>R$ 0,00</td>
+						      <td>R$ 0,00</td>
+						    </tr>
+						    <tr>
+						      <th scope="row">Salário Médio</th>
+						      <td>R$ 0,00</td>
+						      <td>R$ 0,00</td>
+						    </tr>
+						    <tr>
+						      <th scope="row">Maior Salário</th>
+						      <td>R$ 0,00</td>
+						      <td>R$ 0,00</td>
+						    </tr>
+						    <tr>
+						      <th scope="row">Quantidade analisadas</th>
+						      <td>0</td>
+						      <td>0</td>
+						    </tr>
+						  </tbody>
+						</table>
+	    				
+	    			</div>
+    			</div>
+    			
+    			
     			
     		</div>
     	</div>

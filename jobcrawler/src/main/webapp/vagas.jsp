@@ -26,8 +26,14 @@
     	</div>
     	<div class=row>
     		<div class="pesquisa container-fluid">
-    			<h2>Ver vagas disponíveis</h2>
-				<h3 class="font-weight-normal">Verifique as vagas de empregos disponiveis em sua região.</h3>
+    			<div class="container-fluid ">
+    				<div class="row justify-content-center t">
+    					<h2>Ver vagas disponíveis</h2>
+    				</div>
+    				
+					<h4 class="font-weight-normal">Verifique as vagas de empregos disponiveis em sua região.</h4>
+    			</div>
+    			
 	    		<div>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
